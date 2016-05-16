@@ -2,16 +2,24 @@ package pl.edu.us.SeleniumChallenge;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+
 
 public class ExampleTest {
 
@@ -26,7 +34,7 @@ public class ExampleTest {
 	public void tearDown() throws Exception {
 		driver.quit();
 	}
-
+/*
 	@Test
 	public void testGoogle() {
 		driver.get("http://google.pl");
@@ -44,6 +52,7 @@ public class ExampleTest {
 		final String previousURL = driver.getCurrentUrl();
 		WebElement link = driver.findElement(By.linkText("Instytut Informatyki"));
 		link.click();
+		Thread.sleep(1000);
 		wait.until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				return (driver.getCurrentUrl() != previousURL);
@@ -51,5 +60,22 @@ public class ExampleTest {
         });
 		assertEquals("Instytut Informatyki", driver.getTitle());
 	}
+*/
+	@Test
+	public void mnozenie() throws InterruptedException, IOException{
+		driver.get("http://www.anaesthetist.com/mnm/javascript/calc.htm");
+		WebElement dwa = driver.findElement(By.name("two"));
+		dwa.click();
+		WebElement mnozenie = driver.findElement(By.name("mul"));
+		mnozenie.click();
+		dwa.click();
+		WebElement rowna = driver.findElement(By.name("result"));
+		rowna.click();
+		Thread.sleep(1000);
+		File screenshot =((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(screenshot, new File("screenshotFileName.png"));
 
+		assertEquals("4", driver.findElement(By.name("Display")).getAttribute("value"));
+	}
+	
 }
